@@ -1,0 +1,8 @@
+node_modules/
+upload/
+files/
+db/
+documentation/
+*.sql
+.env
+core
