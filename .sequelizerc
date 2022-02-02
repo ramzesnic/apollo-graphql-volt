@@ -6,7 +6,7 @@ const configFolder = 'config';
 
 module.exports = {
   'config': path.resolve(baseFolder, configFolder, 'db-config.json'),
-  'models-path': path.resolve(baseFolder, 'models'),
+  'models-path': path.resolve(baseFolder, dbFolder, 'models'),
   'seeders-path': path.resolve(baseFolder, dbFolder, 'seeders'),
   'migrations-path': path.resolve(baseFolder, dbFolder, 'migrations')
 };
