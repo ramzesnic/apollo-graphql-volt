@@ -4,5 +4,6 @@ files/
 db/
 documentation/
 *.sql
+*.sqlite
 .env
 core
