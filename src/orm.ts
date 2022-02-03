@@ -11,7 +11,7 @@ export class Orm {
     const config = this.appConfig.dbConfig;
     const sequelize = new Sequelize({
       ...config,
-      repositoryMode: true,
+      repositoryMode: false,
       models: models,
     });
     await sequelize.sync({ force: true });
