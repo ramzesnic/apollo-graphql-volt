@@ -36,6 +36,16 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
+  updateUser(
+    @Arg('id') id: number,
+    @Args() data: UserDto,
+    @Info() info: GraphQLResolveInfo,
+  ): Promise<Partial<User>> {
+    const fields = fieldsList(info);
+    return this.userService.updateUser(id, data, fields);
+  }
+
+  @Mutation(() => User)
   deleteUser(
     @Arg('id') id: number,
     @Info() info: GraphQLResolveInfo,

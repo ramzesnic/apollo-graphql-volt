@@ -18,7 +18,7 @@ import { Field, ID, ObjectType } from 'type-graphql';
 
 @ObjectType()
 @DefaultScope(() => ({
-  attributes: ['id', 'nickname', 'email'],
+  attributes: ['id', 'nickname', 'email', 'password'],
 }))
 @Scopes(() => ({
   withPosts: {

@@ -14,7 +14,7 @@ export class Orm {
       repositoryMode: false,
       models: models,
     });
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
 
     return sequelize;
   }
