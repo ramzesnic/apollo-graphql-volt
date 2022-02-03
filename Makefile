@@ -31,7 +31,7 @@ compose-lint:
 	docker-compose run web npm run lint
 
 start:
-	DEBUG="application:*" npm run start-dev
+	DEBUG="application:*" npm run start:dev
 
 compose-dist-build:
 	rm -rf dist
