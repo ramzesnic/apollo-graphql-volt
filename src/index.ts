@@ -6,6 +6,7 @@ import { AppConfiguration } from './config';
 import { UserResolver } from './controllers/resolvers';
 import { Orm } from './orm';
 import { PostResolver } from './controllers/resolvers/post.resolver';
+import { CommentResolver } from './controllers/resolvers/comment.resolver';
 
 const bootstrap = async () => {
   dotenv.config();
@@ -15,7 +16,7 @@ const bootstrap = async () => {
   await orm.init();
 
   const schema = await buildSchema({
-    resolvers: [UserResolver, PostResolver],
+    resolvers: [UserResolver, PostResolver, CommentResolver],
     container: Container,
   });
   const service = new ApolloServer({ schema });
