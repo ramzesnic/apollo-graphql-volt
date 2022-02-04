@@ -5,6 +5,7 @@ import Container from 'typedi';
 import { AppConfiguration } from './config';
 import { UserResolver } from './controllers/resolvers';
 import { Orm } from './orm';
+import { PostResolver } from './controllers/resolvers/post.resolver';
 
 const bootstrap = async () => {
   dotenv.config();
@@ -14,7 +15,7 @@ const bootstrap = async () => {
   await orm.init();
 
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [UserResolver, PostResolver],
     container: Container,
   });
   const service = new ApolloServer({ schema });

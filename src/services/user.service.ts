@@ -11,11 +11,13 @@ export class UserService {
     posts: Post,
     comments: Comment,
   };
+
   private makeUserData(data: UserDto): Partial<User> {
+    const { nickname, email, password } = data;
     return {
-      nickname: data.nickname,
-      email: data.email,
-      password: data.password,
+      nickname,
+      email,
+      password,
     };
   }
 
