@@ -6,6 +6,8 @@ import getDbCongif from './db.config';
 export class AppConfiguration {
   private db = getDbCongif(process.env.NODE_ENV);
   private appPort = parseInt(process.env.PORT) || 4000;
+  private jwtSecret = process.env.JWT_SECRET;
+  private jwtExpiresIn = parseInt(process.env.JWT_EXPIRES_MIN) * 60;
 
   get dbConfig(): Partial<SequelizeOptions> {
     return this.db;
@@ -13,5 +15,13 @@ export class AppConfiguration {
 
   get port(): number {
     return this.appPort;
+  }
+
+  get secret(): string {
+    return this.jwtSecret;
+  }
+
+  get jwtExpires(): number {
+    return this.jwtExpiresIn;
   }
 }

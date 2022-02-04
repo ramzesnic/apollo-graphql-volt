@@ -1,6 +1,14 @@
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
-import { Arg, Args, Info, Mutation, Query, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Args,
+  Authorized,
+  Info,
+  Mutation,
+  Query,
+  Resolver,
+} from 'type-graphql';
 import { Service } from 'typedi';
 import { GraphQLResolveInfo } from 'graphql';
 import { fieldsList } from 'graphql-fields-list';
@@ -18,6 +26,7 @@ export class UserResolver {
   }
 
   @Query(() => User)
+  @Authorized()
   getUser(
     @Arg('id') id: number,
     @Info() info: GraphQLResolveInfo,
