@@ -1,10 +1,11 @@
 import { Service } from 'typedi';
-import { Arg, Args, Info, Mutation, Resolver } from 'type-graphql';
+import { Arg, Args, Ctx, Info, Mutation, Resolver } from 'type-graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { fieldsList } from 'graphql-fields-list';
 import { CommentService } from '../../services/comment.service';
 import { CommentDto } from '../../dto/comment.dto';
 import { Comment } from '../../models/comment';
+import { IContext } from '../../interfaces/icontext';
 
 @Service()
 @Resolver(Comment)
@@ -16,9 +17,10 @@ export class CommentResolver {
     @Arg('postId') postId: number,
     @Args() data: CommentDto,
     @Info() info: GraphQLResolveInfo,
+    @Ctx() ctx: IContext,
   ) {
     const fields = fieldsList(info);
-    const userId = 1;
+    const userId = ctx.user.id;
     return this.commentService.createComment(data, postId, userId, fields);
   }
 

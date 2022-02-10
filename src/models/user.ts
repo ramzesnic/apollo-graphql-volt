@@ -58,6 +58,7 @@ export class User extends Model {
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     user.password = bcrypt.hashSync(user.password, salt);
+    //console.log(user);
   }
 
   async comparePassword(password: string): Promise<boolean> {

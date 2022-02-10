@@ -8,9 +8,9 @@ import { UserResolver } from './controllers/resolvers/user.resolver';
 import { PostResolver } from './controllers/resolvers/post.resolver';
 import { CommentResolver } from './controllers/resolvers/comment.resolver';
 import { LoginResolver } from './controllers/resolvers/login.resolver';
-import { BearerMiddleware } from './controllers/middlewares/bearer.middleware';
+//import { BearerMiddleware } from './controllers/middlewares/bearer.middleware';
 import { userAuthChecker } from './controllers/guards/user-auth-checker';
-import * as jwt from 'jsonwebtoken';
+import { AuthUtil } from './utils/auth.util';
 
 const bootstrap = async () => {
   dotenv.config();
@@ -27,24 +27,7 @@ const bootstrap = async () => {
   });
   const service = new ApolloServer({
     schema,
-    context: ({ req }) => {
-      const authorization: string = req?.headers?.authorization || '';
-      if (!authorization.startsWith('Bearer ')) {
-        return {};
-      }
-      const token = authorization.split(' ')[1];
-      console.log(token);
-      let user;
-      try {
-        user = jwt.verify(token, config.secret);
-      } catch (e) {
-        console.log(e);
-      }
-      return {
-        headers: req.headers,
-        user,
-      };
-    },
+    context: AuthUtil.varifyUser(config.secret),
   });
 
   await service.listen(config.port);

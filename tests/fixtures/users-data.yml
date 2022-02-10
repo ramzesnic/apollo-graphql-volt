@@ -1,0 +1,13 @@
+fixtures:
+  - model: User
+    data:
+      id: 1
+      nickname: test1
+      email: test1@mail.com
+      password: testpassword
+  - model: User
+    data:
+      id: 2
+      nickname: test2
+      email: test2@mail.com
+      password: testpassword

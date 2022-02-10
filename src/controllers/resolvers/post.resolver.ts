@@ -1,11 +1,12 @@
 import { Post } from '../../models/post';
 import { Service } from 'typedi';
-import { Arg, Args, Info, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, Args, Ctx, Info, Mutation, Query, Resolver } from 'type-graphql';
 import { PostService } from '../../services/post.service';
 import { PostsResponseDto } from '../../dto/posts.response.dto';
 import { GraphQLResolveInfo } from 'graphql';
 import { fieldsList, fieldsMap } from 'graphql-fields-list';
 import { PostDto } from '../../dto/post.dto';
+import { IContext } from '../../interfaces/icontext';
 
 @Service()
 @Resolver()
@@ -36,10 +37,10 @@ export class PostResolver {
   createPost(
     @Args() data: PostDto,
     @Info() info: GraphQLResolveInfo,
+    @Ctx() ctx: IContext,
   ): Promise<Partial<Post>> {
     const fields = fieldsList(info);
-    // TODO get id from auth data
-    const userId = 1;
+    const userId = ctx.user.id;
     return this.postService.createPost(data, userId, fields);
   }
 

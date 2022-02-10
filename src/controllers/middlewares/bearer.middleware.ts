@@ -1,8 +1,9 @@
 import { AppConfiguration } from '../../config';
-import { MiddlewareInterface, NextFn, ResolverData } from 'type-graphql';
+import { MiddlewareInterface, NextFn } from 'type-graphql';
 import { Service } from 'typedi';
 import * as jwt from 'jsonwebtoken';
 
+// TODO какого хера не мутирует контекст?
 @Service()
 export class BearerMiddleware implements MiddlewareInterface<any> {
   constructor(private readonly config: AppConfiguration) {}
