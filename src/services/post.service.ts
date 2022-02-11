@@ -65,23 +65,26 @@ export class PostService {
     userId: number,
     fields: string[],
   ): Promise<Partial<Post>> {
-    console.log('================================');
-    console.log(userId);
     const author = await User.findByPk(userId);
     if (!author) {
       throw Error('User not found');
     }
-    const post = Post.build(
-      { ...data },
-      {
-        include: [User],
-      },
-    );
-    post.set('authorId', author.id);
+    const post = await Post.create({ authorId: userId, ...data });
+    //const post = Post.build(
+    //{ ...data },
+    //{
+    //include: [User],
+    //},
+    //);
+    //post.authorId = author.id;
+    //post.$set('author', author);
+    //post.$add('author', author);
     //post.author = author;
+    //console.log(author);
     console.log(post);
+    return post;
 
-    return post.save();
+    //return post.save();
   }
 
   async updatePost(
@@ -105,6 +108,7 @@ export class PostService {
 
     post.title = data.title;
     post.body = data.body;
+    //return post.update({ ...data });
     return post.save();
   }
 

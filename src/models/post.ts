@@ -4,6 +4,7 @@ import {
   BelongsTo,
   Column,
   CreatedAt,
+  ForeignKey,
   HasMany,
   Model,
   PrimaryKey,
@@ -37,12 +38,16 @@ export class Post extends Model {
   @Column(DataTypes.TEXT)
   body: string;
 
+  @ForeignKey(() => User)
+  @Column
+  authorId: number;
+
   @Field(() => User)
-  @BelongsTo(() => User, { foreignKey: 'id', onDelete: 'CASCADE' })
+  @BelongsTo(() => User)
   author: User;
 
   @Field(() => [Comment])
-  @HasMany(() => Comment, 'postId')
+  @HasMany(() => Comment)
   comments: Comment[];
 
   @Field()

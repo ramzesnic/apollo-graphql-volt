@@ -46,11 +46,11 @@ export class User extends Model {
   password: string;
 
   @Field(() => [Post])
-  @HasMany(() => Post, 'authorId')
+  @HasMany(() => Post)
   posts: Post[];
 
   @Field(() => [Comment])
-  @HasMany(() => Comment, 'authorId')
+  @HasMany(() => Comment)
   comments: Comment[];
 
   @BeforeSave
