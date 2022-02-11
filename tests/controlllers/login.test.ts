@@ -1,44 +1,25 @@
 import * as dotenv from 'dotenv';
 import { ApolloServer, gql } from 'apollo-server';
-import { buildSchema } from 'type-graphql';
-import Container from 'typedi';
-import { AppConfiguration } from '../../src/config';
-import { Orm } from '../../src/orm';
-import { LoginResolver } from '../../src/controllers/resolvers/login.resolver';
-import { userAuthChecker } from '../../src/controllers/guards/user-auth-checker';
-import { AuthUtil } from '../../src/utils/auth.util';
 import { Sequelize } from 'sequelize';
 import { Transaction } from 'sequelize';
 import models from '../../src/models';
 import * as sequelizeFixtures from 'sequelize-fixtures';
 import { expect } from 'chai';
+import { App } from '../../src/app';
 
-// TODO add test.env file
 dotenv.config({ path: 'tests/test.env' });
 
 let transaction: Transaction;
-let config: AppConfiguration;
 let sequelize: Sequelize;
-let service: ApolloServer;
+let server: ApolloServer;
 
 const USER_FIXTURES = 'tests/fixtures/users-data.yml';
 
 describe('Login test', () => {
   before(async () => {
-    const orm = Container.get(Orm);
-    config = Container.get(AppConfiguration);
-    sequelize = await orm.init();
-
-    const schema = await buildSchema({
-      resolvers: [LoginResolver],
-      container: Container,
-      //globalMiddlewares: [BearerMiddleware],
-      authChecker: userAuthChecker,
-    });
-    service = new ApolloServer({
-      schema,
-      context: AuthUtil.varifyUser(config.secret),
-    });
+    const app = await App.init();
+    sequelize = app.getOrm();
+    server = app.getServer();
   });
 
   beforeEach(async () => {
@@ -60,7 +41,7 @@ describe('Login test', () => {
         }
       }
     `;
-    const result = await service.executeOperation({
+    const result = await server.executeOperation({
       query,
       variables: { email: 'test1@mail.com', password: 'testpassword' },
     });

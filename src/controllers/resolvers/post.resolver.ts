@@ -1,6 +1,15 @@
 import { Post } from '../../models/post';
 import { Service } from 'typedi';
-import { Arg, Args, Ctx, Info, Mutation, Query, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Args,
+  Authorized,
+  Ctx,
+  Info,
+  Mutation,
+  Query,
+  Resolver,
+} from 'type-graphql';
 import { PostService } from '../../services/post.service';
 import { PostsResponseDto } from '../../dto/posts.response.dto';
 import { GraphQLResolveInfo } from 'graphql';
@@ -14,6 +23,7 @@ export class PostResolver {
   constructor(private readonly postService: PostService) {}
 
   @Query(() => PostsResponseDto)
+  @Authorized()
   getPosts(
     @Arg('page') currentPage: number,
     @Arg('per_page') perPage: number,
@@ -25,6 +35,7 @@ export class PostResolver {
   }
 
   @Query(() => Post)
+  @Authorized()
   getPost(
     @Arg('id') id: number,
     @Info() info: GraphQLResolveInfo,
@@ -34,6 +45,7 @@ export class PostResolver {
   }
 
   @Mutation(() => Post)
+  @Authorized()
   createPost(
     @Args() data: PostDto,
     @Info() info: GraphQLResolveInfo,
@@ -45,6 +57,7 @@ export class PostResolver {
   }
 
   @Mutation(() => Post)
+  @Authorized()
   updatePost(
     @Arg('id') id: number,
     @Args() data: PostDto,
@@ -55,6 +68,7 @@ export class PostResolver {
   }
 
   @Mutation(() => Post)
+  @Authorized()
   deletePost(@Arg('id') id: number, @Info() info: GraphQLResolveInfo) {
     const fields = fieldsList(info);
     return this.postService.deletePost(id, fields);

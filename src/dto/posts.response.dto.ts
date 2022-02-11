@@ -23,7 +23,8 @@ export class PostsResponseDto {
   ) {
     this.posts = posts;
     this.totalPosts = totalPosts;
-    this.pages = Math.trunc(totalPosts / perPage);
+    const pages = totalPosts / perPage;
+    this.pages = Math.trunc(pages > 1 ? pages : pages + 1);
     this.isLastPage = currentPage === this.pages;
   }
 }

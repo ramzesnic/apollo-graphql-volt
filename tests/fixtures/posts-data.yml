@@ -1,0 +1,13 @@
+fixtures:
+  - model: Post
+    data:
+      id: 1
+      title: testTitle1
+      body: testBody1
+      author: 1
+  - model: Post
+    data:
+      id: 2
+      title: testTitle2
+      body: testBody2
+      author: 2

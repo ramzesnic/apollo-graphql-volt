@@ -10,12 +10,12 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<LoginResponseDto> {
     const user = await User.findOne({ where: { email } });
-    if (!user || !user.comparePassword(password)) {
+    if (!user || !(await user.comparePassword(password))) {
       throw Error('Incorrect email or password');
     }
 
     const payload = {
-      userId: user.id,
+      id: user.id,
     };
 
     const token = jwt.sign(payload, this.config.secret, {

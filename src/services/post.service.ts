@@ -18,7 +18,7 @@ export class PostService {
     return {
       title,
       body,
-      author,
+      //author,
     };
   }
 
@@ -60,14 +60,28 @@ export class PostService {
     return Post.findByPk(id, { attributes, include: relations });
   }
 
-  async createPost(data: PostDto, userId: number, fields: string[]) {
+  async createPost(
+    data: PostDto,
+    userId: number,
+    fields: string[],
+  ): Promise<Partial<Post>> {
+    console.log('================================');
+    console.log(userId);
     const author = await User.findByPk(userId);
     if (!author) {
       throw Error('User not found');
     }
-    const post = Post.build(this.makePostData(data, author));
+    const post = Post.build(
+      { ...data },
+      {
+        include: [User],
+      },
+    );
+    post.set('authorId', author.id);
+    //post.author = author;
+    console.log(post);
 
-    return post.save({ fields });
+    return post.save();
   }
 
   async updatePost(

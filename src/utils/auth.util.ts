@@ -14,7 +14,11 @@ export class AuthUtil {
     ({ req }: any) => {
       try {
         const token = AuthUtil.getToken(req);
+        //console.log(token);
+        //console.log(secret);
+
         const user = jwt.verify(token, secret);
+        //console.log(user);
         return {
           headers: req?.headers,
           user,

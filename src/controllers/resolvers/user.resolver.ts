@@ -20,6 +20,7 @@ export class UserResolver {
   constructor(private readonly userService: UserService) {}
 
   @Query(() => [User])
+  @Authorized()
   getUsers(@Info() info: GraphQLResolveInfo): Promise<Partial<User>[]> {
     const fields = fieldsList(info);
     return this.userService.getUsers(fields);
@@ -36,6 +37,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
+  //@Authorized()
   createUser(
     @Args() data: UserDto,
     @Info() info: GraphQLResolveInfo,
@@ -45,6 +47,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
+  @Authorized()
   updateUser(
     @Arg('id') id: number,
     @Args() data: UserDto,
@@ -55,6 +58,7 @@ export class UserResolver {
   }
 
   @Mutation(() => User)
+  @Authorized()
   deleteUser(
     @Arg('id') id: number,
     @Info() info: GraphQLResolveInfo,

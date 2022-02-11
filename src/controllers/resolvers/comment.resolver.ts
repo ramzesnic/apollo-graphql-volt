@@ -1,5 +1,13 @@
 import { Service } from 'typedi';
-import { Arg, Args, Ctx, Info, Mutation, Resolver } from 'type-graphql';
+import {
+  Arg,
+  Args,
+  Authorized,
+  Ctx,
+  Info,
+  Mutation,
+  Resolver,
+} from 'type-graphql';
 import { GraphQLResolveInfo } from 'graphql';
 import { fieldsList } from 'graphql-fields-list';
 import { CommentService } from '../../services/comment.service';
@@ -13,6 +21,7 @@ export class CommentResolver {
   constructor(private readonly commentService: CommentService) {}
 
   @Mutation(() => Comment)
+  @Authorized()
   createComment(
     @Arg('postId') postId: number,
     @Args() data: CommentDto,
@@ -25,6 +34,7 @@ export class CommentResolver {
   }
 
   @Mutation(() => Comment)
+  @Authorized()
   updateComment(
     @Arg('id') id: number,
     @Args() data: CommentDto,
@@ -35,6 +45,7 @@ export class CommentResolver {
   }
 
   @Mutation(() => Comment)
+  @Authorized()
   deleteComment(@Arg('id') id: number, @Info() info: GraphQLResolveInfo) {
     const fields = fieldsList(info);
     return this.commentService.deleteComment(id, fields);
