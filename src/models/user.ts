@@ -45,6 +45,10 @@ export class User extends Model {
   @Column(DataTypes.CHAR)
   password: string;
 
+  @Field()
+  @Column(DataTypes.CHAR)
+  avatar: string;
+
   @Field(() => [Post])
   @HasMany(() => Post, { onDelete: 'RESTRICT' })
   posts: Post[];

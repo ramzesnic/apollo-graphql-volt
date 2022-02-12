@@ -4,6 +4,10 @@ import { Service } from 'typedi';
 import { Post } from '../models/post';
 import { Comment } from '../models/comment';
 import { ModelUtil } from '../utils/model.util';
+import { Stream } from 'stream';
+import { Aws3Service } from './aws3.service';
+import { ImageUtil } from '../utils/image.util';
+import { AppConfiguration } from '../config';
 
 @Service()
 export class UserService {
@@ -11,6 +15,11 @@ export class UserService {
     posts: Post,
     comments: Comment,
   };
+
+  constructor(
+    private readonly s3Service: Aws3Service,
+    private readonly config: AppConfiguration,
+  ) {}
 
   private makeUserData(data: UserDto): Partial<User> {
     const { nickname, email, password } = data;
@@ -89,5 +98,29 @@ export class UserService {
     }
     await user.destroy();
     return user;
+  }
+
+  async addAvatar(
+    id: number,
+    fileName: string,
+    body: Stream,
+  ): Promise<Partial<User>> {
+    const user = await User.findByPk(id);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const { imageX, imageY } = this.config.imageConfig;
+
+    const resizedBody = ImageUtil.resizeFileFromStream(
+      imageX,
+      imageY,
+      fileName,
+      body,
+    );
+
+    const { Location } = await this.s3Service.uploadFile(fileName, resizedBody);
+    user.avatar = Location;
+
+    return user.save();
   }
 }

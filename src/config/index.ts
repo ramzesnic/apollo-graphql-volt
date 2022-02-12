@@ -12,6 +12,8 @@ export class AppConfiguration {
   private awsSecret = process.env.AWS_SECRET;
   private awsBucketName = process.env.AWS_BUCKET_NAME;
   private awsLocation = process.env.AWS_LOCATION;
+  private imageX = process.env.IMAGE_X;
+  private imageY = process.env.IMAGE_Y;
 
   get dbConfig(): Partial<SequelizeOptions> {
     return this.db;
@@ -35,6 +37,13 @@ export class AppConfiguration {
       awsSecret: this.awsSecret,
       awsBucketName: this.awsBucketName,
       awsLocation: this.awsLocation,
+    };
+  }
+
+  get imageConfig(): any {
+    return {
+      imageX: this.imageX,
+      imageY: this.imageY,
     };
   }
 }
