@@ -13,7 +13,6 @@ let transaction: Transaction;
 let sequelize: Sequelize;
 let server: ApolloServer;
 
-const FIXTURES = 'tests/fixtures/*.yml';
 const USER_FIXTURES = 'tests/fixtures/users-data.yml';
 const POST_FIXTURES = 'tests/fixtures/posts-data.yml';
 const COMMENT_FIXTURES = 'tests/fixtures/comments-data.yml';
@@ -33,6 +32,7 @@ describe('Post test', () => {
   });
 
   beforeEach(async () => {
+    //await sequelize.sync({ force: true });
     transaction = await sequelize.transaction();
     await sequelizeFixtures.loadFiles(
       [USER_FIXTURES, POST_FIXTURES, COMMENT_FIXTURES],
@@ -71,10 +71,10 @@ describe('Post test', () => {
     });
     expect(result.errors).to.be.undefined;
     const { totalPosts, pages, isLastPage, posts } = result.data.getPosts;
-    //expect(totalPosts).to.equal(POSTS_COUNT + 1);
+    //expect(totalPosts).to.equal(POSTS_COUNT);
     expect(pages).to.equal(1);
     expect(isLastPage).to.be.true;
-    //expect(posts.length).to.equal(POSTS_COUNT + 1);
+    //expect(posts.length).to.equal(POSTS_COUNT);
   });
 
   it('get post', async () => {
@@ -102,7 +102,7 @@ describe('Post test', () => {
     expect(result.errors).to.be.undefined;
     expect(title).to.equal('testTitle1');
     expect(author.nickname).to.equal('test1');
-    //expect(comments.length).to.equal(2);
+    expect(comments.length).to.equal(2);
   });
 
   it('create post', async () => {
@@ -180,5 +180,6 @@ describe('Post test', () => {
 
   afterEach(async () => {
     await transaction.rollback();
+    //await sequelize.dropAllSchemas({});
   });
 });

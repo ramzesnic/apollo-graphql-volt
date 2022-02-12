@@ -81,7 +81,7 @@ export class PostService {
     //post.$add('author', author);
     //post.author = author;
     //console.log(author);
-    console.log(post);
+    //console.log(post);
     return post;
 
     //return post.save();
