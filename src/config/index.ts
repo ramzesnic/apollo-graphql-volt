@@ -8,6 +8,10 @@ export class AppConfiguration {
   private appPort = parseInt(process.env.PORT) || 4000;
   private jwtSecret = process.env.JWT_SECRET;
   private jwtExpiresIn = parseInt(process.env.JWT_EXPIRES_MIN) * 60;
+  private awsId = process.env.AWS_ID;
+  private awsSecret = process.env.AWS_SECRET;
+  private awsBucketName = process.env.AWS_BUCKET_NAME;
+  private awsLocation = process.env.AWS_LOCATION;
 
   get dbConfig(): Partial<SequelizeOptions> {
     return this.db;
@@ -23,5 +27,14 @@ export class AppConfiguration {
 
   get jwtExpires(): number {
     return this.jwtExpiresIn;
+  }
+
+  get awsConfig(): any {
+    return {
+      awsId: this.awsId,
+      awsSecret: this.awsSecret,
+      awsBucketName: this.awsBucketName,
+      awsLocation: this.awsLocation,
+    };
   }
 }
