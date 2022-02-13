@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { ApolloServer, gql } from 'apollo-server';
+import { ApolloServer, gql } from 'apollo-server-express';
 import { Sequelize } from 'sequelize';
 import { Transaction } from 'sequelize';
 import models from '../../src/models';
@@ -24,6 +24,7 @@ describe('User test', () => {
         id: 1,
       },
     });
+
     const app = await App.init(makeContext);
     sequelize = app.getOrm();
     server = app.getServer();

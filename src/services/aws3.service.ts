@@ -18,19 +18,17 @@ export class Aws3Service {
 
     this.bucketName = awsBucketName;
     this.s3 = new AWS.S3({ accessKeyId, secretAccessKey, region });
-    this.s3.createBucket({ Bucket: awsBucketName }, (err, data) => {
-      if (err) {
-        console.log('Error', err);
-      } else {
-        console.log('Success', data.Location);
-      }
-    });
   }
 
   async uploadFile(
     fileName: string,
     body: Stream,
   ): Promise<AWS.S3.ManagedUpload.SendData> {
+    this.s3.createBucket({ Bucket: this.bucketName }, (err, data) => {
+      if (err) {
+        console.log('Error', err);
+      }
+    });
     const params = {
       Bucket: this.bucketName,
       Key: fileName,

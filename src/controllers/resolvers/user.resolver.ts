@@ -11,13 +11,18 @@ import {
 } from 'type-graphql';
 import { Service } from 'typedi';
 import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { fieldsList } from 'graphql-fields-list';
 import { UserDto } from '../../dto/user.dto';
+import { AppConfiguration } from '../../config';
 
 @Service()
 @Resolver(User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly config: AppConfiguration,
+  ) {}
 
   @Query(() => [User])
   @Authorized()
@@ -65,5 +70,20 @@ export class UserResolver {
   ): Promise<Partial<User>> {
     const fields = fieldsList(info);
     return this.userService.deleteUser(id, fields);
+  }
+
+  @Mutation(() => User)
+  //@Authorized()
+  setAvatar(
+    @Arg('id') id: number,
+    @Arg('file', () => GraphQLUpload) file: FileUpload,
+  ): Promise<Partial<User>> {
+    const { createReadStream, filename } = file;
+    const ext = filename.split('.').pop();
+    const { allowFileTypes } = this.config.imageConfig;
+    if (!allowFileTypes.includes(ext)) {
+      throw Error('File type is not allowed');
+    }
+    return this.userService.addAvatar(id, filename, createReadStream());
   }
 }

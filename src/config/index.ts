@@ -12,8 +12,10 @@ export class AppConfiguration {
   private awsSecret = process.env.AWS_SECRET;
   private awsBucketName = process.env.AWS_BUCKET_NAME;
   private awsLocation = process.env.AWS_LOCATION;
-  private imageX = process.env.IMAGE_X;
-  private imageY = process.env.IMAGE_Y;
+  private imageX = parseInt(process.env.IMAGE_X);
+  private imageY = parseInt(process.env.IMAGE_Y);
+  private maxFileSize = parseInt(process.env.MAX_FILE_SIZE) * 1000 * 1000;
+  private allowFileTypes: string[] = process.env.ALLOW_FILE_TYPES.split(',');
 
   get dbConfig(): Partial<SequelizeOptions> {
     return this.db;
@@ -44,6 +46,8 @@ export class AppConfiguration {
     return {
       imageX: this.imageX,
       imageY: this.imageY,
+      maxFileSize: this.maxFileSize,
+      allowFileTypes: this.allowFileTypes,
     };
   }
 }

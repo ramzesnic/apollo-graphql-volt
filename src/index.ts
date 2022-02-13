@@ -3,11 +3,12 @@ import { App } from './app';
 
 const bootstrap = async () => {
   dotenv.config();
-  const app = await App.init();
-  const config = app.getConfig();
-  const server = app.getServer();
+  const application = await App.init();
+  const config = application.getConfig();
+  //const server = application.getServer();
+  const app = application.getApp();
 
-  await server.listen(config.port);
+  app.listen(config.port);
 };
 
 bootstrap();

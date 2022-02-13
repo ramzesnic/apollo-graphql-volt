@@ -117,9 +117,12 @@ export class UserService {
       fileName,
       body,
     );
+    //console.log(resizedBody);
 
-    const { Location } = await this.s3Service.uploadFile(fileName, resizedBody);
-    user.avatar = Location;
+    const req = await this.s3Service.uploadFile(fileName, resizedBody);
+    //console.log('================================================');
+    //console.log(req);
+    user.avatar = req.Location;
 
     return user.save();
   }
