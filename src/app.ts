@@ -28,6 +28,8 @@ export class App {
     const config = Container.get(AppConfiguration);
     const orm = Container.get(Orm);
     const sequelize = await orm.init();
+    Container.set('sequelize', sequelize);
+
     const app = express();
     app.use(
       graphqlUploadExpress({

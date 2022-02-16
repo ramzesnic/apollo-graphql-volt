@@ -11,3 +11,9 @@ fixtures:
       body: testBody1
       author: 2
       post: 1
+  - model: Comment
+    data:
+      id: 3
+      body: testBody1
+      author: 2
+      post: 2
