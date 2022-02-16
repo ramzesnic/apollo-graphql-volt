@@ -11,3 +11,9 @@ fixtures:
       title: testTitle2
       body: testBody2
       author: 2
+  - model: Post
+    data:
+      id: 3
+      title: testTitle2
+      body: testBody2
+      author: 2

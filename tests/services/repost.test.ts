@@ -8,6 +8,9 @@ import { expect } from 'chai';
 import { App } from '../../src/app';
 import { ReportService } from '../../src/services/report.service';
 import Container from 'typedi';
+import { Comment } from '../../src/models/comment';
+import { Post } from '../../src/models/post';
+import { User } from '../../src/models/user';
 
 dotenv.config({ path: 'tests/test.env' });
 
@@ -33,7 +36,7 @@ describe('Report test', () => {
   });
 
   beforeEach(async () => {
-    //await sequelize.sync({ force: true });
+    await sequelize.sync({ force: true });
     transaction = await sequelize.transaction();
     await sequelizeFixtures.loadFiles(
       [USER_FIXTURES, POST_FIXTURES, COMMENT_FIXTURES],
@@ -44,17 +47,18 @@ describe('Report test', () => {
     );
   });
 
-  it('get posts', async () => {
+  it('get report', async () => {
     const begin = new Date();
     const end = new Date();
     begin.setDate(begin.getDate() - 1);
     end.setDate(begin.getDate() + 1);
     const result = await reportService.makeReport(begin, end);
+    //console.log(await User.findAll({ include: [Post, Comment] }));
     console.log(result);
   });
 
   afterEach(async () => {
     await transaction.rollback();
-    //await sequelize.dropAllSchemas({});
+    await sequelize.dropAllSchemas({});
   });
 });

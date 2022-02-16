@@ -7,13 +7,43 @@ fixtures:
       post: 1
   - model: Comment
     data:
+      id: 3
+      body: testBody1
+      author: 1
+      post: 1
+  - model: Comment
+    data:
       id: 2
+      body: testBody1
+      author: 1
+      post: 1
+  - model: Comment
+    data:
+      id: 10
+      body: testBody1
+      author: 1
+      post: 1
+  - model: Comment
+    data:
+      id: 11
       body: testBody1
       author: 2
       post: 1
   - model: Comment
     data:
-      id: 3
+      id: 13
       body: testBody1
       author: 2
-      post: 2
+      post: 1
+  - model: Comment
+    data:
+      id: 12
+      body: testBody1
+      author: 2
+      post: 1
+  - model: Comment
+    data:
+      id: 14
+      body: testBody1
+      author: 2
+      post: 1
