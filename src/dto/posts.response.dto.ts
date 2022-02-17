@@ -24,7 +24,7 @@ export class PostsResponseDto {
     this.posts = posts;
     this.totalPosts = totalPosts;
     const pages = totalPosts / perPage;
-    this.pages = Math.trunc(pages > 1 ? pages : pages + 1);
+    this.pages = Math.trunc(pages >= 1 ? pages : pages + 1);
     this.isLastPage = currentPage === this.pages;
   }
 }

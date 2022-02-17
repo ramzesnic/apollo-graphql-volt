@@ -71,6 +71,7 @@ describe('Post test', () => {
     });
     expect(result.errors).to.be.undefined;
     const { totalPosts, pages, isLastPage, posts } = result.data.getPosts;
+    console.log(result.data.getPosts);
     //expect(totalPosts).to.equal(POSTS_COUNT);
     expect(pages).to.equal(1);
     expect(isLastPage).to.be.true;
@@ -102,7 +103,7 @@ describe('Post test', () => {
     expect(result.errors).to.be.undefined;
     expect(title).to.equal('testTitle1');
     expect(author.nickname).to.equal('test1');
-    expect(comments.length).to.equal(1);
+    expect(comments.length).to.equal(8);
   });
 
   it('create post', async () => {

@@ -89,7 +89,7 @@ describe('User test', () => {
       .field('operations', JSON.stringify(operations))
       .field('map', JSON.stringify({ '0': ['variables.setAvatarFile'] }))
       .attach('0', file)
-      //.expect(({ body }) => body.data)
+      .expect(({ body }) => body.data)
       .expect(200);
 
     //console.log(response);
