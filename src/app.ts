@@ -8,6 +8,7 @@ import { UserResolver } from './controllers/resolvers/user.resolver';
 import { PostResolver } from './controllers/resolvers/post.resolver';
 import { CommentResolver } from './controllers/resolvers/comment.resolver';
 import { LoginResolver } from './controllers/resolvers/login.resolver';
+import { ReportResolver } from './controllers/resolvers/report.resolver';
 //import { BearerMiddleware } from './controllers/middlewares/bearer.middleware';
 import { userAuthChecker } from './controllers/guards/user-auth-checker';
 import { AuthUtil } from './utils/auth.util';
@@ -38,7 +39,13 @@ export class App {
     );
 
     const schema = await buildSchema({
-      resolvers: [UserResolver, PostResolver, CommentResolver, LoginResolver],
+      resolvers: [
+        UserResolver,
+        PostResolver,
+        CommentResolver,
+        LoginResolver,
+        ReportResolver,
+      ],
       container: Container,
       //globalMiddlewares: [BearerMiddleware],
       authChecker: userAuthChecker,
