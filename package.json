@@ -26,6 +26,7 @@
   "devDependencies": {
     "@aws-sdk/types": "^3.50.0",
     "@types/bcryptjs": "^2.4.2",
+    "@types/bull": "^3.15.8",
     "@types/chai": "^4.3.0",
     "@types/eslint": "^8.4.1",
     "@types/express": "^4.17.13",
@@ -61,6 +62,7 @@
     "apollo-server-express": "^3.6.3",
     "aws-sdk": "^2.1073.0",
     "bcryptjs": "^2.4.3",
+    "bull": "^4.5.5",
     "class-validator": "^0.13.2",
     "dotenv": "^15.0.0",
     "easy-table": "^1.2.0",

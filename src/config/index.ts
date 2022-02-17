@@ -18,6 +18,7 @@ export class AppConfiguration {
   private imageY = parseInt(process.env.IMAGE_Y);
   private maxFileSize = parseInt(process.env.MAX_FILE_SIZE) * 1000 * 1000;
   private allowFileTypes: string[] = process.env.ALLOW_FILE_TYPES.split(',');
+  private bullWorkers = parseInt(process.env.WORKERS);
 
   get dbConfig(): Partial<SequelizeOptions> {
     return this.db;
@@ -33,6 +34,10 @@ export class AppConfiguration {
 
   get jwtExpires(): number {
     return this.jwtExpiresIn;
+  }
+
+  get workers(): number {
+    return this.bullWorkers;
   }
 
   get awsConfig(): any {
