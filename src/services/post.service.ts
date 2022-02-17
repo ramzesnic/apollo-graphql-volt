@@ -42,6 +42,7 @@ export class PostService {
       limit: perPage,
       offset: perPage * (currentPage - 1),
       order: [['published_at', 'DESC']],
+      distinct: true,
     });
 
     return new PostsResponseDto(posts, count, perPage, currentPage);
