@@ -40,7 +40,7 @@ LEFT JOIN (
       model: User,
       mapToModel: true,
     });
-    console.log(users);
+    //console.log(users);
 
     return users.map((u) => ({
       nickname: u.nickname,

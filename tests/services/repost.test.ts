@@ -52,9 +52,13 @@ describe('Report test', () => {
     const end = new Date();
     begin.setDate(begin.getDate() - 1);
     end.setDate(begin.getDate() + 1);
-    const result = await reportService.makeReport(begin, end);
+    const [res1, res2] = await reportService.makeReport(begin, end);
     //console.log(await User.findAll({ include: [Post, Comment] }));
-    console.log(result);
+    //console.log(result);
+    expect(res1.postCount).to.equal(1);
+    expect(res1.commentCount).to.equal(4);
+    expect(res2.postCount).to.equal(2);
+    expect(res2.commentCount).to.equal(4);
   });
 
   afterEach(async () => {

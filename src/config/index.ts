@@ -1,10 +1,12 @@
 import { SequelizeOptions } from 'sequelize-typescript';
 import { Service } from 'typedi';
 import getDbCongif from './db.config';
+import getMailConfig from './mail.config';
 
 @Service()
 export class AppConfiguration {
   private db = getDbCongif(process.env.NODE_ENV);
+  private mail = getMailConfig();
   private appPort = parseInt(process.env.PORT) || 4000;
   private jwtSecret = process.env.JWT_SECRET;
   private jwtExpiresIn = parseInt(process.env.JWT_EXPIRES_MIN) * 60;
@@ -49,5 +51,9 @@ export class AppConfiguration {
       maxFileSize: this.maxFileSize,
       allowFileTypes: this.allowFileTypes,
     };
+  }
+
+  get mailConfig(): any {
+    return this.mail;
   }
 }
