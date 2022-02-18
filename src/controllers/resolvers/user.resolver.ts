@@ -25,7 +25,7 @@ export class UserResolver {
   ) {}
 
   @Query(() => [User])
-  @Authorized()
+  //@Authorized()
   getUsers(@Info() info: GraphQLResolveInfo): Promise<Partial<User>[]> {
     const fields = fieldsList(info);
     return this.userService.getUsers(fields);

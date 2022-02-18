@@ -31,7 +31,7 @@ export class Post extends Model {
   id: number;
 
   @Field()
-  @Column(DataTypes.CHAR)
+  @Column(DataTypes.STRING)
   title: string;
 
   @Field()

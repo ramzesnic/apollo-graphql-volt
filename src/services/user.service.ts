@@ -57,6 +57,7 @@ export class UserService {
 
   async createUser(data: UserDto, fields: string[]): Promise<Partial<User>> {
     const user = User.build(this.makeUserData(data));
+    console.log(user);
     return user.save({ fields });
   }
 

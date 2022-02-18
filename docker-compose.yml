@@ -4,9 +4,29 @@ version: '3.1'
 services:
   web:
     build: .
-    command: make start
+    command: npm run start:prod
     ports:
       - "4000:4000"
       - "8081:8081"
     volumes:
       - .:/code
+    depends_on:
+      - redis
+      - postgres
+    links:
+      - redis
+      - postgres
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
+  postgres:
+    image: postgres
+    #user: '1000:1000'
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_DB=development
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - '5432:5432'

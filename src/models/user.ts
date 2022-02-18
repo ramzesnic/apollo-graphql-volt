@@ -34,19 +34,19 @@ export class User extends Model {
   id: number;
 
   @Field()
-  @Column({ unique: true, type: DataTypes.CHAR })
+  @Column({ unique: true, type: DataTypes.STRING })
   nickname: string;
 
   @Field()
-  @Column({ unique: true, type: DataTypes.CHAR })
+  @Column({ unique: true, type: DataTypes.STRING })
   email: string;
 
   @Field()
-  @Column(DataTypes.CHAR)
+  @Column(DataTypes.STRING)
   password: string;
 
   @Field()
-  @Column(DataTypes.CHAR)
+  @Column(DataTypes.STRING)
   avatar: string;
 
   @Field(() => [Post])

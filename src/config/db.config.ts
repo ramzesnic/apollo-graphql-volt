@@ -1,17 +1,31 @@
 import { SequelizeOptions } from 'sequelize-typescript';
 
 const config = {
-  development: {
+  development: () => ({
     storage: './db.development.sqlite',
     dialect: 'sqlite',
-  },
-  test: {
+  }),
+  test: () => ({
     storage: ':memory:',
     dialect: 'sqlite',
-  },
-  production: {
-    use_env_variable: 'DATABASE_URL',
+  }),
+  production: (
+    host: string,
+    port: number,
+    username: string,
+    password: string,
+    database: string,
+  ) => ({
+    host,
+    port,
+    username,
+    password,
+    database,
     dialect: 'postgres',
-  },
+  }),
 };
-export default (env: string): Partial<SequelizeOptions> => config[env];
+
+export default (env: string, conf: any[]): Partial<SequelizeOptions> => {
+  const dbConfig = config[env];
+  return dbConfig(...conf);
+};

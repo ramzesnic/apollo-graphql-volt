@@ -5,7 +5,13 @@ import getMailConfig from './mail.config';
 
 @Service()
 export class AppConfiguration {
-  private db = getDbCongif(process.env.NODE_ENV);
+  private db = getDbCongif(process.env.NODE_ENV, [
+    process.env.POSTGRES_HOST,
+    process.env.POSTGRES_PORT,
+    process.env.POSTGRES_USER,
+    process.env.POSTGRES_PASSWORD,
+    process.env.POSTGRES_DB,
+  ]);
   private mail = getMailConfig();
   private appPort = parseInt(process.env.PORT) || 4000;
   private jwtSecret = process.env.JWT_SECRET;
@@ -19,6 +25,12 @@ export class AppConfiguration {
   private maxFileSize = parseInt(process.env.MAX_FILE_SIZE) * 1000 * 1000;
   private allowFileTypes: string[] = process.env.ALLOW_FILE_TYPES.split(',');
   private bullWorkers = parseInt(process.env.WORKERS);
+  private redis = process.env.REDIS_URL;
+  private nodeEnv = process.env.NODE_ENV;
+
+  get env(): string {
+    return this.nodeEnv;
+  }
 
   get dbConfig(): Partial<SequelizeOptions> {
     return this.db;
@@ -38,6 +50,10 @@ export class AppConfiguration {
 
   get workers(): number {
     return this.bullWorkers;
+  }
+
+  get redisUrl(): string {
+    return this.redis;
   }
 
   get awsConfig(): any {
